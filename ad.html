@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বিজ্ঞাপন</title>
+    <script src="//libtl.com/sdk.js" data-zone="9706917" data-sdk="show_9706917"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        #ad-container {
+            text-align: center;
+        }
+        #loading {
+            font-size: 24px;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div id="ad-container">
+        <p id="loading">Ads are loading...</p>
+    </div>
+    <script>
+        // প্রিলোড করুন (যদি চান)
+        show_9706917({ type: 'preload' }).catch(() => {});
+
+        // অ্যাড দেখান
+        show_9706917({ type: 'end' })
+            .then((result) => {
+                if (result.reward_event_type === 'valued') {
+                    // অ্যাড সম্পূর্ণ দেখা হয়েছে, রিডিরেক্ট করুন
+                    window.location.href = 'index.html?adCompleted=true';
+                } else {
+                    // অ্যাড সম্পূর্ণ না দেখা, রিডিরেক্ট ছাড়া টাকা যোগ না
+                    window.location.href = 'index.html?adCompleted=false';
+                }
+            })
+            .catch((error) => {
+                alert('বিজ্ঞাপন লোড হয়নি: ' + error.message);
+                window.location.href = 'index.html?adCompleted=false';
+            });
+
+        // যদি ইউজার ব্যাক যায় বা ক্লোজ করে, টাকা যোগ না (কিন্তু SDK হ্যান্ডেল করে)
+    </script>
+</body>
+</html>
